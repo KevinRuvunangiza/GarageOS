@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Confirm your GarageOS Account</title>
+  <!--[if mso]>
+  <noscript>
+    <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    /* Reset */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    /* Responsive */
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .fluid { max-width: 100% !important; height: auto !important; }
+      .stack-column { display: block !important; width: 100% !important; max-width: 100% !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#F3F2EE; font-family:'Helvetica Neue',Arial,sans-serif;">
+
+  <!-- Preview Text -->
+  <div style="display:none;font-size:1px;line-height:1px;max-height:0;overflow:hidden;mso-hide:all;">
+    Verify your email to start managing your garage with GarageOS. &#847;&zwnj;&nbsp;
+  </div>
+
+  <!-- Email Wrapper -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F3F2EE;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+
+        <!-- Email Container -->
+        <table class="email-container" role="presentation" width="580" cellpadding="0" cellspacing="0" border="0"
+          style="max-width:580px; background-color:#FAF9F6; border-radius:16px; overflow:hidden;
+                 box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+
+          <!-- Header: Brand Strip -->
+          <tr>
+            <td style="background-color:#18181B; padding:28px 40px; text-align:center;">
+              <!-- Icon + Wordmark -->
+              <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle; padding-right:12px;">
+                    <div style="display:inline-block; background-color:#F59E0B; border-radius:10px;
+                                width:40px; height:40px; line-height:40px; text-align:center;">
+                      <span style="font-size:20px; line-height:40px;">🔧</span>
+                    </div>
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <span style="font-size:26px; font-weight:800; letter-spacing:-0.5px;
+                                 color:#FFFFFF; font-family:'Helvetica Neue',Arial,sans-serif;">
+                      Garage<span style="color:#F59E0B;">OS</span>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:44px 40px 32px 40px;">
+
+              <!-- Heading -->
+              <h1 style="margin:0 0 12px 0; font-size:26px; font-weight:800; line-height:1.2;
+                          color:#18181B; letter-spacing:-0.3px;">
+                You're almost in. 🎉
+              </h1>
+
+              <!-- Sub-heading -->
+              <p style="margin:0 0 28px 0; font-size:16px; line-height:1.6; color:#52525B;">
+                Thanks for signing up to <strong style="color:#18181B;">GarageOS</strong> —
+                the professional garage management platform built for the floor, not the office.
+              </p>
+
+              <!-- Divider -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding-bottom:28px;">
+                    <hr style="border:none; border-top:1px solid #E7E5E4; margin:0;" />
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Instructions -->
+              <p style="margin:0 0 8px 0; font-size:14px; font-weight:700; color:#18181B;
+                         text-transform:uppercase; letter-spacing:0.08em;">
+                Step 1 — Verify Your Email
+              </p>
+              <p style="margin:0 0 28px 0; font-size:15px; line-height:1.6; color:#52525B;">
+                Click the button below to confirm your email address and activate your garage dashboard.
+                This link expires in <strong style="color:#18181B;">24 hours</strong>.
+              </p>
+
+              <!-- CTA Button -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-bottom:32px;">
+                    <a href="{{ .ConfirmationURL }}"
+                       style="display:inline-block; background-color:#F59E0B; color:#18181B;
+                              font-size:15px; font-weight:800; text-decoration:none;
+                              padding:16px 40px; border-radius:10px; letter-spacing:0.02em;
+                              box-shadow:0 2px 12px rgba(245,158,11,0.35);">
+                      ✓ &nbsp; Verify My Account
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Fallback URL -->
+              <p style="margin:0 0 28px 0; font-size:12px; line-height:1.5; color:#A1A1AA; text-align:center;">
+                If the button doesn't work, copy and paste this link into your browser:<br />
+                <a href="{{ .ConfirmationURL }}"
+                   style="color:#F59E0B; word-break:break-all; text-decoration:none;">
+                  {{ .ConfirmationURL }}
+                </a>
+              </p>
+
+              <!-- Divider -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding-bottom:28px;">
+                    <hr style="border:none; border-top:1px solid #E7E5E4; margin:0;" />
+                  </td>
+                </tr>
+              </table>
+
+              <!-- What's next -->
+              <p style="margin:0 0 8px 0; font-size:14px; font-weight:700; color:#18181B;
+                         text-transform:uppercase; letter-spacing:0.08em;">
+                Step 2 — Enter Your Access Code
+              </p>
+              <p style="margin:0; font-size:15px; line-height:1.6; color:#52525B;">
+                After verifying your email, you'll be prompted to enter an
+                <strong style="color:#18181B;">Access Code</strong> to unlock your garage dashboard.
+                Contact us if you need yours.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Feature Row -->
+          <tr>
+            <td style="background-color:#F5F4F1; padding:24px 40px; border-top:1px solid #E7E5E4; border-bottom:1px solid #E7E5E4;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="width:33.33%; vertical-align:top; text-align:center; padding:0 8px;">
+                    <p style="margin:0 0 4px 0; font-size:22px;">🗂️</p>
+                    <p style="margin:0; font-size:11px; font-weight:700; color:#18181B; text-transform:uppercase; letter-spacing:0.06em;">Job Tickets</p>
+                    <p style="margin:4px 0 0 0; font-size:11px; color:#71717A;">Track every repair</p>
+                  </td>
+                  <td style="width:33.33%; vertical-align:top; text-align:center; padding:0 8px; border-left:1px solid #E7E5E4; border-right:1px solid #E7E5E4;">
+                    <p style="margin:0 0 4px 0; font-size:22px;">📋</p>
+                    <p style="margin:0; font-size:11px; font-weight:700; color:#18181B; text-transform:uppercase; letter-spacing:0.06em;">Client CRM</p>
+                    <p style="margin:4px 0 0 0; font-size:11px; color:#71717A;">Vehicle history</p>
+                  </td>
+                  <td style="width:33.33%; vertical-align:top; text-align:center; padding:0 8px;">
+                    <p style="margin:0 0 4px 0; font-size:22px;">📊</p>
+                    <p style="margin:0; font-size:11px; font-weight:700; color:#18181B; text-transform:uppercase; letter-spacing:0.06em;">Finances</p>
+                    <p style="margin:4px 0 0 0; font-size:11px; color:#71717A;">Revenue analytics</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px; text-align:center;">
+              <p style="margin:0 0 8px 0; font-size:12px; color:#A1A1AA; line-height:1.5;">
+                You received this email because you registered on GarageOS.<br />
+                If you didn't create this account, you can safely ignore this email.
+              </p>
+              <p style="margin:0; font-size:12px; color:#71717A; line-height:1.5;">
+                Need help? Contact us at
+                <a href="mailto:ruvunangizakev@gmail.com"
+                   style="color:#F59E0B; text-decoration:none; font-weight:600;">
+                  ruvunangizakev@gmail.com
+                </a>
+              </p>
+              <p style="margin:12px 0 0 0; font-size:11px; color:#D4D4D8;">
+                © 2025 GarageOS. Built for the workshop.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Email Container -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
