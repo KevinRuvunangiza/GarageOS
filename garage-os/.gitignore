@@ -31,3 +31,6 @@ dist-ssr
 
 # Supabase Local
 supabase/.temp/
+
+# Scratch / one-off test scripts (never commit credentials)
+test_*.js
