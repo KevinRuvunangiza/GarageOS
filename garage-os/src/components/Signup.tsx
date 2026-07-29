@@ -31,7 +31,7 @@ const initialForm: SignupFormData = {
   password: '',
 }
 
-export function Signup({ onSuccess, onSwitchToLogin }: SignupProps) {
+export function Signup({ onSuccess: _onSuccess, onSwitchToLogin }: SignupProps) {
   const [form, setForm, clearForm] = useLocalStorage<SignupFormData>(STORAGE_KEY, initialForm)
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
