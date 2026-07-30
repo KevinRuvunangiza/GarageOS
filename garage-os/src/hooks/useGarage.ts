@@ -18,11 +18,13 @@ export interface GarageProfile {
 export function useGarage() {
   const [garage, setGarage] = useState<GarageProfile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [profileMissing, setProfileMissing] = useState(false)
 
   const fetchGarage = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       setGarage(null)
+      setProfileMissing(false)
       setLoading(false)
       return
     }
@@ -31,14 +33,62 @@ export function useGarage() {
       .from('garages')
       .select('*')
       .eq('id', user.id)
-      .single()
+      .maybeSingle()  // Returns null (not an error) when no row found
 
     if (error) {
+      // A real DB/network error — log it but don't hard-block
       console.error('Error fetching garage:', error)
       setGarage(null)
-    } else {
-      setGarage(data as GarageProfile)
+      setProfileMissing(true)
+      setLoading(false)
+      return
     }
+
+    if (data) {
+      // Row found — happy path
+      setGarage(data as GarageProfile)
+      setProfileMissing(false)
+      setLoading(false)
+      return
+    }
+
+    // No row found (PGRST116 equivalent) — attempt auto-insert fallback
+    console.warn('No garage profile found for user. Attempting auto-create fallback...')
+    const { data: inserted, error: insertError } = await supabase
+      .from('garages')
+      .insert({
+        id: user.id,
+        garage_name: 'My Garage',
+        garage_address: '',
+        personal_phone: '',
+        garage_phone: '',
+        subscription_status: 'pending',
+      })
+      .select()
+      .single()
+
+    if (insertError) {
+      // Auto-create failed (e.g. RLS blocks it or row already existed by race)
+      // Try one more select in case of a race condition where the row was just created
+      const { data: retryData } = await supabase
+        .from('garages')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle()
+
+      if (retryData) {
+        setGarage(retryData as GarageProfile)
+        setProfileMissing(false)
+      } else {
+        console.error('Auto-create garage failed:', insertError)
+        setGarage(null)
+        setProfileMissing(true)
+      }
+    } else {
+      setGarage(inserted as GarageProfile)
+      setProfileMissing(false)
+    }
+
     setLoading(false)
   }, [])
 
@@ -90,5 +140,5 @@ export function useGarage() {
     fetchGarage()
   }, [fetchGarage])
 
-  return { garage, loading, fetchGarage, updateSubscription, applyPromoCode }
+  return { garage, loading, profileMissing, fetchGarage, updateSubscription, applyPromoCode }
 }
