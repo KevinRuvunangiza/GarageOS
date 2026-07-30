@@ -17,3 +17,17 @@
     text-wrap: balance;
   }
 }
+
+@media print {
+  body, html {
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .receipt-container {
+    max-height: 100vh;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    overflow: hidden;
+  }
+}

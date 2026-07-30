@@ -349,29 +349,29 @@ export function JobTicketForm({ editJobId, initialClient, initialVehicle, onSucc
 
         if (jobError) throw jobError
 
-        // Replace job items
-        const { error: deleteItemsError } = await supabase
+        // Replace job items in background
+        supabase
           .from('job_items')
           .delete()
           .eq('job_id', editJobId)
-
-        if (deleteItemsError) throw deleteItemsError
-
-        if (items.length > 0) {
-          const jobItems = items.map((item) => ({
-            job_id: editJobId,
-            type: item.type,
-            description: item.description,
-            cost: item.cost,
-            garage_id: garage.id,
-          }))
-
-          const { error: itemsError } = await supabase
-            .from('job_items')
-            .insert(jobItems)
-
-          if (itemsError) throw itemsError
-        }
+          .then(({ error: deleteItemsError }) => {
+            if (deleteItemsError) {
+              console.error('Error deleting old job items:', deleteItemsError)
+              return
+            }
+            if (items.length > 0) {
+              const jobItems = items.map((item) => ({
+                job_id: editJobId,
+                type: item.type,
+                description: item.description,
+                cost: item.cost,
+                garage_id: garage.id,
+              }))
+              supabase.from('job_items').insert(jobItems).then(({ error: itemsError }) => {
+                if (itemsError) console.error('Error saving job items:', itemsError)
+              })
+            }
+          })
       } else {
         // CREATE MODE
         let targetClientId = clientId
@@ -444,11 +444,9 @@ export function JobTicketForm({ editJobId, initialClient, initialVehicle, onSucc
             garage_id: garage.id,
           }))
 
-          const { error: itemsError } = await supabase
-            .from('job_items')
-            .insert(jobItems)
-
-          if (itemsError) throw itemsError
+          supabase.from('job_items').insert(jobItems).then(({ error: itemsError }) => {
+            if (itemsError) console.error('Error saving job items in background:', itemsError)
+          })
         }
       }
 
@@ -635,36 +633,34 @@ export function JobTicketForm({ editJobId, initialClient, initialVehicle, onSucc
                   </div>
                 </div>
 
-                {/* "No results" → show full new-client fields */}
-                {searchQuery.length >= 2 && !isSearching && searchResults.length === 0 && (
-                  <div className="space-y-4 pt-1">
-                    <div className="flex items-center gap-2">
-                      <div className="h-px flex-1 bg-stone-200" />
-                      <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">New Client Profile</span>
-                      <div className="h-px flex-1 bg-stone-200" />
+                {/* Always show new client fields if no existing client is selected */}
+                <div className="space-y-4 pt-1">
+                  <div className="flex items-center gap-2">
+                    <div className="h-px flex-1 bg-stone-200" />
+                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">New Client Profile</span>
+                    <div className="h-px flex-1 bg-stone-200" />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Client Name *</label>
+                      <Input required value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="e.g. John Smith" />
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Client Name *</label>
-                        <Input required value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="e.g. John Smith" />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Phone Number *</label>
-                        <Input required type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="e.g. 071 234 5678" className="font-mono" />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Email Address</label>
-                        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="e.g. john@example.com" className="font-mono text-xs" />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Physical Address</label>
-                        <Input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="e.g. 45 Main Street, Rondebosch" />
-                      </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Phone Number *</label>
+                      <Input required type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="e.g. 071 234 5678" className="font-mono" />
                     </div>
                   </div>
-                )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Email Address</label>
+                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="e.g. john@example.com" className="font-mono text-xs" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Physical Address</label>
+                      <Input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="e.g. 45 Main Street, Rondebosch" />
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </CardContent>
